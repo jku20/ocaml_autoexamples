@@ -20,12 +20,12 @@ let os_newline = "\n"
 (** Given the contents of a file and an example
     presumably in the file, returns the file contents
     with the example corrected *)
-let fix_example file_contents ({ function_name; example_body; loc } : Example.t)
-    =
+let _fix_example file_contents
+    ({ function_name; example_body; loc } : Example.t) =
   let ( let* ) = Result.bind in
   let fun_line_num = loc.loc_start.pos_lnum in
   let lines = Str.split newline_regex file_contents in
-  let rec patrition_on_modified_line contents line =
+  let patrition_on_modified_line contents line =
     let rec loop i = function
       | l :: t, _, _ when i = 1 -> Ok ([], l, t)
       | l :: t, a, b -> (
