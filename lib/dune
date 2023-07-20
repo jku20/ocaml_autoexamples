@@ -1,0 +1,3 @@
+(library
+ (libraries ppxlib) 
+ (name ocaml_autoexamples))
