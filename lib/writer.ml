@@ -10,12 +10,18 @@ let newline_regex =
 (* regex for closing an ocaml comment *)
 let comment_close_regex = Str.regexp_string "*)"
 
-(** formats an example to be printed to as a comment *)
-let format_example ({ function_name; example_body; _ } : Example.t) =
-  Printf.sprintf "function %s prints %s" function_name example_body
-
 (* TODO: make this not just assume the newline is \n *)
 let os_newline = "\n"
+
+(* TODO: figure out this indentation *)
+let file_indent = "    "
+
+(** formats an example to be printed to as a comment *)
+let format_example ({ function_name; example_body; _ } : Example.t) =
+  let prefix = os_newline ^ file_indent in
+  let postfix = os_newline in
+  Printf.sprintf "%sfunction \"%s\" prints: %s%s" prefix function_name
+    example_body postfix
 
 (** Given the contents of a file and an example
     presumably in the file, returns the file contents
@@ -94,4 +100,5 @@ let write_corrected_file file_name examples =
   | Ok s ->
       let oc = open_out_bin (file_name ^ ".corrected") in
       Out_channel.output_string oc s;
+      Out_channel.close oc;
       Ok ()

@@ -1,6 +1,8 @@
 (library
  (name ocaml_autoexamples_tests)
  (libraries core ocaml_autoexamples)
- (inline_tests)
+ (inline_tests
+  (deps
+   (glob_files_rec data/*)))
  (preprocess
   (pps ppx_expect)))
