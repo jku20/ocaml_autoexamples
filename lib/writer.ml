@@ -20,8 +20,8 @@ let os_newline = "\n"
 (** Given the contents of a file and an example
     presumably in the file, returns the file contents
     with the example corrected *)
-let _fix_example file_contents
-    ({ function_name; example_body; loc } : Example.t) =
+let fix_example ({ function_name; example_body; loc } : Example.t) file_contents
+    =
   let ( let* ) = Result.bind in
   let fun_line_num = loc.loc_start.pos_lnum in
   let lines = Str.split newline_regex file_contents in
@@ -80,4 +80,18 @@ let _fix_example file_contents
   in
   Ok (List.fold_left (fun acc v -> acc ^ os_newline ^ v) "" lines ^ os_newline)
 
-let write_corrected_file _file_name _examples = Ok ()
+let write_corrected_file file_name examples =
+  let ic = open_in_bin file_name in
+  let contents = In_channel.input_all ic in
+  In_channel.close ic;
+  let to_write =
+    List.fold_left
+      (fun acc v -> Result.bind acc (fix_example v))
+      (Ok contents) examples
+  in
+  match to_write with
+  | Error _ as err -> err
+  | Ok s ->
+      let oc = open_out_bin (file_name ^ ".corrected") in
+      Out_channel.output_string oc s;
+      Ok ()
