@@ -30,7 +30,8 @@ let%expect_test "trival write corrected file test" =
     | Ok () -> In_channel.read_all (file_path ^ ".corrected")
   in
   printf "%s" res;
-  [%expect {|
+  [%expect
+    {|
     (** this is some junk woah
         -1-2-5-3-9-----EXAMPLE-----1-0-9-7-3-
         function "a_function" prints: this is a test
@@ -66,7 +67,8 @@ let%expect_test "trival replace corrected file test" =
     | Ok () -> In_channel.read_all (file_path ^ ".corrected")
   in
   printf "%s" res;
-  [%expect {|
+  [%expect
+    {|
     (** this is some junk woah *)
     let a_function = Printf.printf "this is a test"
 
