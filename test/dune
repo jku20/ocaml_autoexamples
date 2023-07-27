@@ -1,6 +1,6 @@
 (library
  (name ocaml_autoexamples_tests)
- (libraries core ocaml_autoexamples)
+ (libraries core runner)
  (inline_tests
   (deps
    (glob_files_rec data/*)))

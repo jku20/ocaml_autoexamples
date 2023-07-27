@@ -1,0 +1,4 @@
+(library
+ (libraries ppxlib str)
+ (public_name ocaml_autoexamples.runner)
+ (name runner))

@@ -1,5 +1,5 @@
 open Core
-open Ocaml_autoexamples
+open Runner
 open Example
 
 let%expect_test "trivial_test" =
