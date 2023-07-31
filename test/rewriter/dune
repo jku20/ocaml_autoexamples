@@ -19,5 +19,6 @@
 (test
  (name rewriter_tests)
  (modules rewriter_tests)
+ (flags -w -32)
  (preprocess
   (pps ocaml_autoexamples)))

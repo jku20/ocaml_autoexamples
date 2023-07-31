@@ -1,1 +1,1 @@
-let%autoex () = Printf.printf "goodbye"
+let%autoex foo = Printf.printf "goodbye"
