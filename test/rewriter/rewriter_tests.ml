@@ -1,1 +1,2 @@
-let%autoex foo = Printf.printf "goodbye"
+let gen () = "world"
+let%autoex foo s = (Printf.printf "hello %s" s [@autoex_gen gen])
