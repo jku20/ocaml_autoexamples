@@ -102,13 +102,17 @@ let fix_example ({ function_name; example_body; loc } : Example.t) file_contents
       in
       Ok (rem @ [ corrected_comment ] @ pf)
     with Not_found ->
+      Printf.printf "Looking at line %s" l;
       Error
         (Printf.sprintf
            "Error: line %d does not have a comment in the line above it"
            fun_line_num)
   in
   let* lines = fix_comment_block_above lines fun_line_num in
-  Ok (List.fold_left (fun acc v -> acc ^ os_newline ^ v) "" lines ^ os_newline)
+  let* out =
+    Ok (List.fold_left (fun acc v -> acc ^ os_newline ^ v) "" lines ^ os_newline)
+  in
+  Ok (String.sub out 1 (String.length out - 1))
 
 let write_corrected_file file_name examples =
   let ic = open_in_bin file_name in

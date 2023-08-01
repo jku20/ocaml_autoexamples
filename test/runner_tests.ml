@@ -3,8 +3,8 @@ open Runner
 open Example
 
 let%expect_test "trivial_test" =
-  let f () = printf "%s" "trivial test" in
-  printf "%s" (Collector.output_of f);
+  let f () = "trivial test" in
+  printf "%s" (Collector.output_of f Fun.id);
   [%expect {| trivial test |}]
 
 let%expect_test "trival write corrected file test" =

@@ -50,27 +50,35 @@ let expand ~ctxt flg attributes fun_name expr =
   in
   let (module B) = Ast_builder.make loc in
   let open B in
-  let generator_name =
+  let generator_name, to_string_name =
     let res =
       List.find_map
         (function
           | {
-              attr_name = { txt = "autoex_gen"; _ };
-              attr_payload = Ppxlib.PStr [%str [%e? p]];
+              attr_name = { txt = "autoex"; _ };
+              attr_payload = Ppxlib.PStr [%str [%e? p1], [%e? p2]];
               attr_loc = _;
             } ->
-              Some p
+              Some (p1, p2)
           | _ -> None)
         attributes
     in
-    match res with Some x -> [%expr [%e x] ()] | None -> eunit
+    let error =
+      pexp_extension
+      @@ Location.error_extensionf ~loc "generator and/or stringifyer not found"
+    in
+    match res with
+    | Some (x, y) -> ([%expr [%e x] ()], y)
+    | None -> (error, error)
   in
   let location_literal = make_location_literal loc in
   let examples =
     [%expr
       [
         Runner.Example.Example.make [%e estring fun_name]
-          (Runner.Collector.output_of (fun () -> [%e expr] [%e generator_name]))
+          (Runner.Collector.output_of
+             (fun () -> [%e expr] [%e generator_name])
+             [%e to_string_name])
           [%e location_literal];
       ]]
   in
