@@ -19,6 +19,7 @@
 (test
  (name rewriter_tests)
  (modules rewriter_tests)
- (flags -w -32)
+ (flags -w -32 -dsource)
+ (libraries ocaml_autoexamples.runner)
  (preprocess
   (pps ocaml_autoexamples)))

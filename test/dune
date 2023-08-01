@@ -5,4 +5,4 @@
   (deps
    (glob_files_rec data/*)))
  (preprocess
-  (pps ppx_expect)))
+  (pps ppx_expect ocaml_autoexamples)))

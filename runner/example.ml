@@ -4,4 +4,6 @@ module Example = struct
     example_body : string;
     loc : Ppxlib.location;
   }
+
+  let make function_name example_body loc = { function_name; example_body; loc }
 end
