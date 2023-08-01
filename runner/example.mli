@@ -5,7 +5,7 @@ module Example : sig
     loc : Ppxlib.location;
   }
 
+  val make : string -> string -> Ppxlib.location -> t
   (** makes an `Example.t` taking a function name, example body and
       location. It is a nice convience function *)
-  val make : string -> string -> Ppxlib.location -> t
 end
