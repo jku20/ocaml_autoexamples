@@ -15,8 +15,8 @@
 
 (package
  (name ocaml_autoexamples)
- (synopsis "a ppx to automatically generate example usage of functions")
- (description "a ppx to automatically generate example usage of functions")
- (depends ocaml dune))
+ (synopsis "A ppx to automatically generate example usage of functions")
+ (description "A ppx to automatically generate example usage of functions")
+ (depends ocaml dune ppxlib (core :with-test)))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
